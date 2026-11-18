@@ -99,6 +99,11 @@ nav.main a:hover { color: var(--indigo); }
 .screen { position: relative; aspect-ratio: 16 / 11; max-width: 100%; overflow: hidden; }
 .slide { position: absolute; inset: 0; opacity: 0; transform: scale(1.02); transition: opacity .6s ease, transform .8s ease; display: grid; grid-template-rows: auto 1fr; }
 .slide.on { opacity: 1; transform: none; }
+.slide { pointer-events: none; } .slide.on { pointer-events: auto; }
+a.pill, a.s-link { text-decoration: none; cursor: pointer; transition: transform .15s ease, filter .15s ease; }
+a.pill:hover, a.s-link:hover { transform: translateY(-1px); filter: brightness(1.08); }
+a.url { text-decoration: none; display: block; }
+a.url[href]:hover { color: var(--indigo); text-decoration: underline; }
 .s-nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; font: 700 .85rem var(--font-display); }
 .s-nav span { display: flex; gap: 10px; } .s-nav span i { width: 34px; height: 6px; border-radius: 3px; background: currentColor; opacity: .3; display: block; }
 .s-body { position: relative; display: grid; align-content: end; padding: 20px; gap: 8px; overflow: hidden; }
@@ -268,7 +273,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       </div>
 
       <div class="browser" aria-label="Examples of websites we build">
-        <div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url" id="mockUrl">ashraf-brothers-agro-farm.vercel.app</div></div>
+        <div class="chrome"><div class="dots"><i></i><i></i><i></i></div><a class="url" id="mockUrl" href="https://ashraf-brothers-agro-farm.vercel.app/" target="_blank" rel="noopener" title="Open this site in a new tab">ashraf-brothers-agro-farm.vercel.app ↗</a></div>
         <div class="screen" id="screen">
           <div class="slide on" data-url="ashraf-brothers-agro-farm.vercel.app" style="background:#1d2b20;color:#fff">
             <div class="s-nav" style="position:relative;z-index:1">Ashraf Brothers Agro Farm<span><i></i><i></i><i></i></span></div>
@@ -278,7 +283,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
               <span class="sample-tag">Live client site</span>
               <h4>Goats, cattle &amp; fresh halal meat</h4>
               <p>Goats from $200 · Fresh goat meat $12/lb · Lugoff, SC</p>
-              <span class="pill" style="background:#D8A431;color:#18241C">Plan a visit</span>
+              <a class="pill" href="https://ashraf-brothers-agro-farm.vercel.app/#visit" target="_blank" rel="noopener" style="background:#D8A431;color:#18241C">Plan a visit ↗</a>
             </div>
           </div>
           <div class="slide" data-url="your-restaurant.com" style="background:#7A2E1F;color:#FCEFD9">
@@ -318,13 +323,13 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
             </div>
           </div>
           <div class="slide" data-url="asim-siddique.vercel.app" style="background:radial-gradient(circle at 85% 90%, #2A3A1E 0, #0B1F17 60%);color:#E9F2ED">
-            <div class="s-nav"><span style="gap:8px;align-items:center"><b style="display:grid;place-items:center;width:24px;height:24px;border-radius:6px;background:#E9F2ED;color:#0B1F17;font:700 .62rem 'JetBrains Mono',monospace">AS</b>Asim Siddique</span><b style="background:#D9B26A;color:#0B1F17;font:600 .7rem 'Figtree',sans-serif;padding:5px 10px;border-radius:999px">Get in touch</b></div>
+            <div class="s-nav"><span style="gap:8px;align-items:center"><b style="display:grid;place-items:center;width:24px;height:24px;border-radius:6px;background:#E9F2ED;color:#0B1F17;font:700 .62rem 'JetBrains Mono',monospace">AS</b>Asim Siddique</span><a class="s-link" href="https://asim-siddique.vercel.app/" target="_blank" rel="noopener" style="background:#D9B26A;color:#0B1F17;font:600 .7rem 'Figtree',sans-serif;padding:5px 10px;border-radius:999px">Get in touch ↗</a></div>
             <div class="s-body">
               <span class="sample-tag">Live site</span>
               <p style="font:400 .7rem 'JetBrains Mono',monospace;opacity:.85"><span style="color:#5BD48C">●</span> ONLINE &nbsp;uptime: 30+ yrs &nbsp;zLinux · middleware</p>
               <h4 style="font-family:'Big Shoulders Display','Arial Narrow',Impact,sans-serif;text-transform:uppercase;letter-spacing:0;line-height:.92;max-width:16ch;font-size:clamp(1.5rem,3.6vw,2.4rem)">Keeping critical systems <span style="color:#D9B26A">secure</span>, stable and compliant.</h4>
               <p>30+ years in security, compliance and enterprise infrastructure. Columbia, SC.</p>
-              <span class="pill" style="background:transparent;color:#D9B26A;border:1px solid #D9B26A">See selected work ↓</span>
+              <a class="pill" href="https://asim-siddique.vercel.app/" target="_blank" rel="noopener" style="background:transparent;color:#D9B26A;border:1px solid #D9B26A">See selected work ↗</a>
             </div>
           </div>
         </div>
@@ -556,7 +561,9 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     cur = (i + slides.length) % slides.length;
     slides.forEach((s, k) => s.classList.toggle("on", k === cur));
     tabs.forEach((t, k) => t.setAttribute("aria-selected", k === cur));
-    url.textContent = slides[cur].dataset.url;
+    const live = slides[cur].querySelector("a.pill");
+    url.textContent = slides[cur].dataset.url + (live ? " ↗" : "");
+    if (live) url.href = "https://" + slides[cur].dataset.url + "/"; else url.removeAttribute("href");
   };
   const auto = () => { clearInterval(timer); if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => go(cur + 1), 4200); };
   tabs.forEach(t => t.addEventListener("click", () => { go(+t.dataset.i); auto(); }));
