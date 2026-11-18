@@ -449,7 +449,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           </div>
           <pre id="pMsg"></pre>
           <button class="btn" type="button" id="copyPlan">Copy message</button>
-          <small>Send it to <span id="sendTo"></span></small>
+          <small>Send it to Asim Siddique at <span id="sendTo"></span></small>
         </aside>
       </div>
     </div>
@@ -497,6 +497,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           <a class="btn" href="#plan" style="justify-self:start">Plan my website <span class="arr">→</span></a>
         </div>
         <div class="contact">
+          <div><span>Contact</span><b>Asim Siddique</b></div>
           <div><span>Call or text</span><b id="cPhone"></b></div>
           <div><span>Email</span><b id="cEmail"></b></div>
           <div><span>Serving</span><b>South Carolina</b></div>
@@ -633,7 +634,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     $("#tStart").textContent = money(buildCost);
 
     const name = $("#pName").value.trim(), biz = $("#pBiz").value.trim(), type = $("#pType").value, have = $("#pHave").value, note = $("#pNote").value.trim();
-    let m = `Hi! ${name ? "This is " + name + (biz ? " from " + biz : "") + ". " : biz ? "I'm with " + biz + ". " : ""}I'd like a website${type ? " for my " + type : ""}.`;
+    let m = `Hi Asim! ${name ? "This is " + name + (biz ? " from " + biz : "") + ". " : biz ? "I'm with " + biz + ". " : ""}I'd like a website${type ? " for my " + type : ""}.`;
     if (have === "no") m += " It would be my first website.";
     if (have === "yes") m += " I have one now, but it needs a redo.";
     if (have === "fb") m += " Right now I only have a Facebook page.";
