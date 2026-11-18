@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Palmetto Web Works</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Fast, phone-friendly websites for local South Carolina businesses. Fair prices, no contracts, and your site stays yours.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: split hero with a live browser mockup, then bands — includes strip, business-type tabs, featured work, pricing, a site planner, process, FAQ, closing call. */
+:root {
+  --bg: #F5F6FA;        /* cool paper */
+  --surface: #FFFFFF;
+  --ink: #0E1530;       /* night indigo */
+  --muted: #586079;
+  --line: #DCE0EC;
+  --indigo: #1E3A8A;    /* SC flag blue, the accent */
+  --indigo-ink: #FFFFFF;
+  --indigo-soft: #E5EAF8;
+  --frond: #2F7D5B;     /* palmetto green, for "included" ticks */
+  --glow: #F3C24F;      /* porch-light yellow, used once or twice */
+  --todo: #FFF1C2;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --r: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B1022; --surface: #131A33; --ink: #E8EBF5; --muted: #9AA3BF; --line: #263052;
+    --indigo: #8FA8F5; --indigo-ink: #0B1022; --indigo-soft: #1C2750; --frond: #6FC79E; --glow: #F3C24F; --todo: #4A3D12;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0B1022; --surface: #131A33; --ink: #E8EBF5; --muted: #9AA3BF; --line: #263052;
+  --indigo: #8FA8F5; --indigo-ink: #0B1022; --indigo-soft: #1C2750; --frond: #6FC79E; --glow: #F3C24F; --todo: #4A3D12;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+body { background: var(--bg); color: var(--ink); font: 400 17px/1.6 var(--font-body); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+a { color: var(--indigo); }
+:focus-visible { outline: 3px solid var(--glow); outline-offset: 2px; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.05; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+h2 { font-size: clamp(2rem, 4.4vw, 3.1rem); font-weight: 800; }
+h3 { font-size: 1.25rem; font-weight: 700; letter-spacing: -.01em; }
+p { margin: 0; }
+.wrap { max-width: 1160px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.band { padding-block: clamp(60px, 9vw, 112px); }
+.kicker { font: 500 .78rem var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--indigo); }
+.lede { color: var(--muted); font-size: 1.12rem; max-width: 58ch; }
+.head { display: grid; gap: 14px; margin-bottom: 40px; max-width: 760px; }
+.todo { background: var(--todo); border-radius: 4px; padding: 0 4px; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: 600 1rem var(--font-body); padding: 13px 22px; border-radius: 999px; border: 1.5px solid var(--ink); background: var(--ink); color: var(--bg); text-decoration: none; cursor: pointer; white-space: nowrap; transition: transform .15s ease; }
+.btn:hover { transform: translateY(-1px); }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn.small { padding: 8px 16px; font-size: .9rem; }
+.btn .arr { transition: transform .2s; }
+.btn:hover .arr { transform: translateX(3px); }
+
+/* header */
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: border-color .2s; }
+header.top.scrolled { border-color: var(--line); }
+header.top .wrap { display: flex; align-items: center; gap: 20px; padding-block: 14px; }
+.logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font: 800 1.15rem var(--font-display); letter-spacing: -.02em; white-space: nowrap; }
+.logo svg { width: 34px; height: 34px; flex: none; }
+nav.main { display: flex; gap: 26px; margin-left: auto; }
+nav.main a { color: var(--ink); text-decoration: none; font-weight: 500; font-size: .95rem; }
+nav.main a:hover { color: var(--indigo); }
+@media (max-width: 820px) { nav.main { display: none; } header.top .btn { margin-left: auto; } }
+
+/* hero */
+.hero .wrap { display: grid; grid-template-columns: 1fr 1.05fr; gap: clamp(32px, 5vw, 64px); align-items: center; padding-block: clamp(40px, 7vw, 84px) clamp(48px, 7vw, 88px); }
+.hero h1 { font-size: clamp(2.8rem, 7vw, 5.3rem); font-weight: 800; letter-spacing: -.035em; }
+.hero h1 em { font-style: normal; color: var(--indigo); position: relative; white-space: nowrap; }
+.hero h1 em::after { content: ""; position: absolute; left: 0; right: 0; bottom: .06em; height: .14em; background: var(--glow); z-index: -1; border-radius: 3px; }
+.hero .lede { margin-top: 22px; }
+.hero .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.reassure { margin-top: 16px; font-size: .92rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.reassure span::before { content: "✓ "; color: var(--frond); font-weight: 700; }
+@media (max-width: 900px) { .hero .wrap { grid-template-columns: 1fr; } }
+
+/* browser mockup */
+.browser { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 30px 60px -30px rgba(14,21,48,.45); overflow: hidden; min-width: 0; }
+.chrome { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.dots { display: flex; gap: 6px; } .dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); display: block; }
+.url { flex: 1; min-width: 0; font: 400 .78rem var(--font-mono); color: var(--muted); background: var(--bg); border-radius: 999px; padding: 5px 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.screen { position: relative; aspect-ratio: 16 / 11; max-width: 100%; overflow: hidden; }
+.slide { position: absolute; inset: 0; opacity: 0; transform: scale(1.02); transition: opacity .6s ease, transform .8s ease; display: grid; grid-template-rows: auto 1fr; }
+.slide.on { opacity: 1; transform: none; }
+.s-nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; font: 700 .85rem var(--font-display); }
+.s-nav span { display: flex; gap: 10px; } .s-nav span i { width: 34px; height: 6px; border-radius: 3px; background: currentColor; opacity: .3; display: block; }
+.s-body { position: relative; display: grid; align-content: end; padding: 20px; gap: 8px; overflow: hidden; }
+.s-body h4 { margin: 0; font: 800 clamp(1.3rem, 3vw, 2rem)/1 var(--font-display); letter-spacing: -.02em; max-width: 12ch; position: relative; }
+.s-body p { font-size: .82rem; max-width: 30ch; position: relative; opacity: .9; }
+.s-body .pill { justify-self: start; position: relative; font: 600 .75rem var(--font-body); padding: 6px 12px; border-radius: 999px; }
+.s-body img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.s-body .shade { position: absolute; inset: 0; background: linear-gradient(transparent 30%, rgba(0,0,0,.65)); }
+.sample-tag { position: absolute; top: 10px; right: 10px; z-index: 2; font: 500 .66rem var(--font-mono); letter-spacing: .06em; text-transform: uppercase; background: rgba(255,255,255,.9); color: #0E1530; padding: 3px 8px; border-radius: 999px; }
+.switch { display: flex; gap: 6px; padding: 10px 12px; border-top: 1px solid var(--line); overflow-x: auto; }
+.switch button { font: 500 .8rem var(--font-body); padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; white-space: nowrap; }
+.switch button[aria-selected="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+/* includes strip */
+.includes { border-block: 1px solid var(--line); background: var(--surface); }
+.includes ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); }
+.includes li { padding: 22px 16px; border-right: 1px solid var(--line); display: grid; gap: 4px; }
+.includes li:last-child { border-right: 0; }
+.includes b { font: 700 1.05rem var(--font-display); }
+.includes span { font-size: .88rem; color: var(--muted); }
+@media (max-width: 900px) { .includes ul { grid-template-columns: 1fr 1fr; } .includes li { border-bottom: 1px solid var(--line); } .includes li:nth-child(2n) { border-right: 0; } .includes li:last-child { grid-column: span 2; border-bottom: 0; } }
+
+/* business tabs */
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.tabs button { font: 600 .95rem var(--font-body); padding: 10px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--indigo); color: var(--indigo-ink); border-color: var(--indigo); }
+.panel { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(22px, 4vw, 40px); }
+.panel h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+.panel .lede { margin-top: 12px; font-size: 1rem; }
+.ticks { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; align-content: start; }
+.ticks li { display: grid; grid-template-columns: 24px 1fr; gap: 10px; }
+.ticks li::before { content: ""; width: 22px; height: 22px; border-radius: 50%; background: var(--frond); mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12'/%3E%3C/svg%3E"); position: relative; margin-top: 2px; box-shadow: inset 0 0 0 6px var(--frond); }
+.ticks li { position: relative; }
+.ticks li::after { content: "✓"; position: absolute; left: 5px; top: 1px; color: #fff; font-size: .8rem; font-weight: 700; }
+@media (max-width: 760px) { .panel { grid-template-columns: 1fr; } }
+
+/* work */
+.work { background: var(--ink); color: var(--bg); }
+.work .kicker { color: var(--glow); }
+.work .lede { color: color-mix(in srgb, var(--bg) 72%, transparent); }
+.case { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(24px, 4vw, 48px); align-items: center; }
+.case-shots { display: grid; grid-template-columns: 1.4fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; min-width: 0; }
+.case-shots img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; display: block; aspect-ratio: 4 / 3; }
+.case-shots img:first-child { grid-row: span 2; aspect-ratio: auto; }
+.case h3 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+.case .meta { display: grid; gap: 18px; min-width: 0; }
+.case dl { display: grid; grid-template-columns: auto 1fr; gap: 10px 18px; margin: 0; font-size: .95rem; }
+.case dt { font: 500 .75rem var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: color-mix(in srgb, var(--bg) 60%, transparent); padding-top: 3px; }
+.case dd { margin: 0; }
+.work .btn { background: var(--bg); color: var(--ink); border-color: var(--bg); justify-self: start; }
+.next-slot { margin-top: 28px; border: 1.5px dashed color-mix(in srgb, var(--bg) 35%, transparent); border-radius: var(--r); padding: 22px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between; }
+.next-slot p { color: color-mix(in srgb, var(--bg) 80%, transparent); }
+@media (max-width: 860px) { .case { grid-template-columns: 1fr; } }
+
+/* pricing */
+.bill { display: inline-flex; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px; margin-bottom: 28px; }
+.bill button { font: 600 .9rem var(--font-body); padding: 8px 16px; border-radius: 999px; border: 0; background: transparent; color: var(--muted); cursor: pointer; }
+.bill button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.bill small { color: var(--frond); font-weight: 600; }
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: stretch; }
+.plan { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 26px; display: grid; grid-template-rows: auto auto auto 1fr auto; gap: 14px; position: relative; }
+.plan.pop { border: 2px solid var(--indigo); }
+.plan .badge { position: absolute; top: -12px; left: 24px; background: var(--indigo); color: var(--indigo-ink); font: 600 .75rem var(--font-body); padding: 4px 10px; border-radius: 999px; }
+.plan .price { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+.plan .price b { font: 800 2.8rem/1 var(--font-display); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.plan .price span { color: var(--muted); font-size: .92rem; }
+.plan .care { font-size: .92rem; color: var(--muted); padding: 10px 12px; background: var(--bg); border-radius: 10px; font-variant-numeric: tabular-nums; }
+.plan .care b { color: var(--ink); }
+.plan .ticks { font-size: .95rem; }
+.plan .btn { width: 100%; }
+.plan:not(.pop) .btn { background: transparent; color: var(--ink); }
+.extras { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px 20px; color: var(--muted); font-size: .92rem; }
+.extras b { color: var(--ink); font-weight: 600; }
+@media (max-width: 900px) { .plans { grid-template-columns: 1fr; } }
+
+/* planner */
+.planner { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; }
+.form { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(20px, 3vw, 30px); display: grid; gap: 22px; }
+fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 10px; min-width: 0; }
+legend { font: 700 1rem var(--font-display); margin-bottom: 4px; padding: 0; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opts label { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; font-weight: 500; font-size: .95rem; background: var(--bg); }
+.opts input { accent-color: var(--indigo); margin: 0; }
+.opts label:has(input:checked) { border-color: var(--indigo); background: var(--indigo-soft); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label { font-weight: 600; font-size: .9rem; }
+.field input, .field select, .field textarea { font: 400 1rem var(--font-body); padding: 11px 13px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); width: 100%; }
+.summary { background: var(--indigo); color: var(--indigo-ink); border-radius: var(--r); padding: clamp(20px, 3vw, 30px); display: grid; gap: 16px; align-content: start; position: sticky; top: calc(84px + env(safe-area-inset-top, 0px)); min-width: 0; }
+.summary .kicker { color: inherit; opacity: .75; }
+.totals { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; font-variant-numeric: tabular-nums; }
+.totals .big { font: 800 2.4rem/1 var(--font-display); letter-spacing: -.02em; }
+.totals hr { grid-column: span 2; border: 0; border-top: 1px solid color-mix(in srgb, currentColor 30%, transparent); margin: 4px 0; width: 100%; }
+.summary pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font: 400 .92rem/1.5 var(--font-body); background: color-mix(in srgb, var(--indigo-ink) 12%, transparent); padding: 14px; border-radius: 10px; max-height: 260px; overflow-y: auto; }
+.summary .btn { background: var(--indigo-ink); color: var(--indigo); border-color: var(--indigo-ink); }
+.summary small { opacity: .8; }
+@media (max-width: 900px) { .planner { grid-template-columns: 1fr; } .summary { position: static; } }
+@media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+
+/* steps */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; counter-reset: s; }
+.steps li { counter-increment: s; border-top: 3px solid var(--ink); padding-top: 18px; display: grid; gap: 8px; align-content: start; }
+.steps li::before { content: "0" counter(s); font: 500 .85rem var(--font-mono); color: var(--indigo); }
+.steps p { color: var(--muted); font-size: .97rem; }
+@media (max-width: 860px) { .steps { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .steps { grid-template-columns: 1fr; } }
+
+/* faq */
+.faq { display: grid; gap: 10px; max-width: 820px; }
+.faq details { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; }
+.faq summary { cursor: pointer; list-style: none; padding: 18px 0; font: 700 1.08rem var(--font-display); display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font: 400 1.5rem/1 var(--font-body); color: var(--indigo); transition: transform .2s; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { padding-bottom: 18px; color: var(--muted); max-width: 64ch; }
+
+/* closing */
+.closing { text-align: left; }
+.closing .box { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: clamp(28px, 6vw, 64px); display: grid; grid-template-columns: 1.3fr 1fr; gap: 32px; align-items: center; position: relative; overflow: hidden; }
+.closing .box::before { content: ""; position: absolute; width: 380px; height: 380px; right: -120px; top: -140px; border-radius: 50%; background: var(--indigo-soft); }
+.closing .box > * { position: relative; }
+.contact { display: grid; gap: 12px; }
+.contact div { display: grid; gap: 2px; }
+.contact span { font: 500 .75rem var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.contact b { font: 700 1.2rem var(--font-display); overflow-wrap: anywhere; }
+@media (max-width: 760px) { .closing .box { grid-template-columns: 1fr; } }
+footer { padding-block: 32px; color: var(--muted); font-size: .88rem; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; }
+
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 999px; font-weight: 500; opacity: 0; pointer-events: none; transition: .25s; z-index: 50; }
+.toast.on { opacity: 1; transform: translate(-50%, 0); }
+</style>
+
+<header class="top" id="hdr">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Palmetto Web Works home">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <rect width="40" height="40" rx="10" fill="var(--indigo)"/>
+        <path d="M13 9a8 8 0 1 0 9.5 11.6A6.6 6.6 0 1 1 13 9Z" fill="var(--indigo-ink)"/>
+        <path d="M27 31V19" stroke="var(--glow)" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M27 19c-2-3-5.5-3.6-7.5-2.5 2.6.1 5 1.2 7.5 2.5Zm0 0c2-3 5.5-3.6 7.5-2.5-2.6.1-5 1.2-7.5 2.5Zm0 0c-.6-3.2.6-5.6 2.4-6.8-.9 2.2-1.6 4.4-2.4 6.8Zm0 0c.6-3.2-.6-5.6-2.4-6.8.9 2.2 1.6 4.4 2.4 6.8Z" fill="var(--glow)"/>
+      </svg>
+      Palmetto Web Works
+    </a>
+    <nav class="main" aria-label="Sections">
+      <a href="#work">Work</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#process">How it works</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn small" href="#plan">Get a quote</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="kicker">Websites for South Carolina small businesses</p>
+        <h1 style="margin-top:14px">Your business, <em>open online.</em></h1>
+        <p class="lede">Customers are searching on their phones right now. We build fast, simple websites that show your work, your prices and how to reach you, and we keep them up to date for you.</p>
+        <div class="actions">
+          <a class="btn" href="#plan">Plan my website <span class="arr">→</span></a>
+          <a class="btn ghost" href="#work">See our work</a>
+        </div>
+        <p class="reassure"><span>Sites from $300</span><span>No contracts</span><span>Your site stays yours</span></p>
+      </div>
+
+      <div class="browser" aria-label="Examples of websites we build">
+        <div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url" id="mockUrl">ashraf-brothers-agro-farm.vercel.app</div></div>
+        <div class="screen" id="screen">
+          <div class="slide on" data-url="ashraf-brothers-agro-farm.vercel.app" style="background:#1d2b20;color:#fff">
+            <div class="s-nav" style="position:relative;z-index:1">Ashraf Brothers Agro Farm<span><i></i><i></i><i></i></span></div>
+            <div class="s-body">
+              <img src="images/herd.jpg" alt="">
+              <div class="shade"></div>
+              <span class="sample-tag">Live client site</span>
+              <h4>Goats, cattle &amp; fresh halal meat</h4>
+              <p>Goats from $200 · Fresh goat meat $12/lb · Lugoff, SC</p>
+              <span class="pill" style="background:#D8A431;color:#18241C">Plan a visit</span>
+            </div>
+          </div>
+          <div class="slide" data-url="your-restaurant.com" style="background:#7A2E1F;color:#FCEFD9">
+            <div class="s-nav">Your Restaurant<span><i></i><i></i><i></i></span></div>
+            <div class="s-body" style="background:radial-gradient(circle at 80% 20%, #C2552F 0 22%, transparent 23%), radial-gradient(circle at 65% 55%, #E9A23B 0 12%, transparent 13%)">
+              <span class="sample-tag">Sample design</span>
+              <h4>Tonight's menu is online</h4>
+              <p>Daily specials, hours, catering orders and a tap-to-call button.</p>
+              <span class="pill" style="background:#FCEFD9;color:#7A2E1F">See the menu</span>
+            </div>
+          </div>
+          <div class="slide" data-url="your-barbershop.com" style="background:#11161F;color:#EAF0F7">
+            <div class="s-nav">Your Barbershop<span><i></i><i></i><i></i></span></div>
+            <div class="s-body" style="background:repeating-linear-gradient(135deg, transparent 0 26px, rgba(220,60,60,.18) 26px 40px, transparent 40px 66px, rgba(70,110,220,.18) 66px 80px)">
+              <span class="sample-tag">Sample design</span>
+              <h4>Fresh cuts, no waiting</h4>
+              <p>Services and prices, photos of your work, and booking by text.</p>
+              <span class="pill" style="background:#EAF0F7;color:#11161F">Book a chair</span>
+            </div>
+          </div>
+          <div class="slide" data-url="your-community-center.org" style="background:#0F4C45;color:#E8F5EF">
+            <div class="s-nav">Your Community Center<span><i></i><i></i><i></i></span></div>
+            <div class="s-body" style="background:radial-gradient(circle at 78% 30%, #F3C24F 0 9%, transparent 10%), radial-gradient(circle at 84% 26%, #0F4C45 0 9%, transparent 10%)">
+              <span class="sample-tag">Sample design</span>
+              <h4>Programs, events &amp; donations</h4>
+              <p>Weekly schedule, upcoming events and a simple way to give.</p>
+              <span class="pill" style="background:#E8F5EF;color:#0F4C45">This week's events</span>
+            </div>
+          </div>
+          <div class="slide" data-url="your-lawn-care.com" style="background:#E9F1DF;color:#1F3317">
+            <div class="s-nav">Your Lawn &amp; Home Services<span><i></i><i></i><i></i></span></div>
+            <div class="s-body" style="background:linear-gradient(transparent 55%, #9CC27A 55% 70%, #6FA04F 70%)">
+              <span class="sample-tag">Sample design</span>
+              <h4>Free estimates this week</h4>
+              <p>Service areas, before-and-after photos and a quick quote form.</p>
+              <span class="pill" style="background:#1F3317;color:#E9F1DF">Get an estimate</span>
+            </div>
+          </div>
+        </div>
+        <div class="switch" role="tablist" aria-label="Example sites" id="switch">
+          <button role="tab" aria-selected="true" data-i="0">Farm</button>
+          <button role="tab" aria-selected="false" data-i="1">Restaurant</button>
+          <button role="tab" aria-selected="false" data-i="2">Barbershop</button>
+          <button role="tab" aria-selected="false" data-i="3">Nonprofit</button>
+          <button role="tab" aria-selected="false" data-i="4">Home services</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="includes" aria-label="Included in every website">
+    <div class="wrap" style="padding-left:0;padding-right:0">
+      <ul>
+        <li><b>Made for phones</b><span>Looks right on every screen</span></li>
+        <li><b>Fast to load</b><span>No heavy templates or plugins</span></li>
+        <li><b>Secure</b><span>https and hosting included</span></li>
+        <li><b>Ready for Google</b><span>Titles, descriptions and maps link</span></li>
+        <li><b>Yours to keep</b><span>Your domain, your content</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="forH">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">Built around your business</p>
+        <h2 id="forH">Every business needs something different from its website</h2>
+        <p class="lede">Pick your kind of business to see what we'd put on your site.</p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Business types" id="bizTabs"></div>
+      <div class="panel" role="tabpanel" id="bizPanel" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="band work" id="work" aria-labelledby="workH">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">Featured work</p>
+        <h2 id="workH">A family farm, now easy to find</h2>
+        <p class="lede">Ashraf Brothers Agro Farm in Lugoff sells goats, cattle and fresh halal meat. Before, customers could only find them on Facebook or by word of mouth.</p>
+      </div>
+      <div class="case">
+        <div class="case-shots">
+          <img src="images/herd.jpg" alt="Goats in the yard at Ashraf Brothers Agro Farm" loading="lazy">
+          <img src="images/kids.jpg" alt="Young goats by the farm shelter" loading="lazy">
+          <img src="images/meat.jpg" alt="Fresh-cut goat meat" loading="lazy">
+        </div>
+        <div class="meta">
+          <h3>Ashraf Brothers Agro Farm</h3>
+          <dl>
+            <dt>Built</dt><dd>A one-page site with photos, prices and a gallery</dd>
+            <dt>Tools</dt><dd>A meat price calculator and a message builder that turns visitors into texts</dd>
+            <dt>Extras</dt><dd>English and Bangla, a visit planner and a link to their farm tour video</dd>
+            <dt>Package</dt><dd>Business</dd>
+          </dl>
+          <a class="btn" href="https://ashraf-brothers-agro-farm.vercel.app" target="_blank" rel="noopener">Visit the live site <span class="arr">↗</span></a>
+        </div>
+      </div>
+      <div class="next-slot">
+        <p>Your business could be the next site here.</p>
+        <a class="btn small" href="#plan">Plan my website</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="pricing" aria-labelledby="priceH">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">Pricing</p>
+        <h2 id="priceH">Simple prices, no surprises</h2>
+        <p class="lede">Pay once for the build. Then a small care plan keeps your site online and up to date. Cancel the care plan any time.</p>
+      </div>
+      <div class="bill" role="group" aria-label="Care plan billing">
+        <button type="button" data-bill="month" aria-pressed="true">Pay monthly</button>
+        <button type="button" data-bill="year" aria-pressed="false">Pay yearly <small>2 months free</small></button>
+      </div>
+      <div class="plans" id="plans"></div>
+      <p class="extras"><b>Add-ons:</b> <span>Custom domain setup $50</span><span>Google Maps listing $50</span><span>Extra page $75</span><span>Second language $100</span></p>
+    </div>
+  </section>
+
+  <section class="band" id="plan" aria-labelledby="planH" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">Plan your site</p>
+        <h2 id="planH">See your price and send us your idea</h2>
+        <p class="lede">Choose what you need. We'll write the message for you to send. Nothing is sent from this page.</p>
+      </div>
+      <div class="planner">
+        <form class="form" id="planForm" novalidate>
+          <fieldset>
+            <legend>Package</legend>
+            <div class="opts" id="pkgOpts"></div>
+          </fieldset>
+          <fieldset>
+            <legend>Add-ons</legend>
+            <div class="opts" id="addOpts"></div>
+          </fieldset>
+          <fieldset>
+            <legend>Care plan</legend>
+            <div class="opts">
+              <label><input type="radio" name="care" value="month" checked> Monthly</label>
+              <label><input type="radio" name="care" value="year"> Yearly</label>
+              <label><input type="radio" name="care" value="none"> No care plan</label>
+            </div>
+          </fieldset>
+          <div class="row2">
+            <div class="field"><label for="pName">Your name</label><input id="pName" autocomplete="name" placeholder="e.g. Nabil"></div>
+            <div class="field"><label for="pBiz">Business name</label><input id="pBiz" autocomplete="organization" placeholder="e.g. Lugoff Barbershop"></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="pType">Kind of business</label>
+              <select id="pType"><option value="">Choose one</option><option>farm or food business</option><option>restaurant or catering</option><option>salon or barbershop</option><option>home services or trades</option><option>nonprofit or community center</option><option>other</option></select>
+            </div>
+            <div class="field"><label for="pHave">Do you have a website now?</label>
+              <select id="pHave"><option value="">Choose one</option><option value="no">No, this would be my first</option><option value="yes">Yes, but it needs a redo</option><option value="fb">Only a Facebook page</option></select>
+            </div>
+          </div>
+          <div class="field"><label for="pNote">Anything else</label><textarea id="pNote" rows="3" placeholder="What you sell, who your customers are, a website you like…"></textarea></div>
+        </form>
+        <aside class="summary" aria-live="polite">
+          <span class="kicker">Your estimate</span>
+          <div class="totals">
+            <span>Build, one time</span><b id="tBuild">$500</b>
+            <span id="tCareLbl">Care plan</span><b id="tCare">$30 / month</b>
+            <hr>
+            <span>Due to start</span><span class="big" id="tStart">$500</span>
+          </div>
+          <pre id="pMsg"></pre>
+          <button class="btn" type="button" id="copyPlan">Copy message</button>
+          <small>Send it to <span id="sendTo"></span></small>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="process" aria-labelledby="procH" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">How it works</p>
+        <h2 id="procH">From first chat to live site</h2>
+      </div>
+      <ol class="steps">
+        <li><h3>Talk</h3><p>A short call or coffee. Tell us what you sell, who your customers are and what they ask you most.</p></li>
+        <li><h3>Send photos</h3><p>Phone photos work. Send your prices, hours and anything customers should know.</p></li>
+        <li><h3>Preview</h3><p>You see your site before it goes live. Ask for changes until it feels right.</p></li>
+        <li><h3>Go live</h3><p>We publish it, connect your domain and keep it up to date on the care plan.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band" id="faq" aria-labelledby="faqH" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">Questions</p>
+        <h2 id="faqH">Good to know</h2>
+      </div>
+      <div class="faq">
+        <details open><summary>Do I need to know anything about computers?</summary><p>No. You tell us about your business and send photos from your phone. We handle the design, hosting and publishing.</p></details>
+        <details><summary>How long does it take?</summary><p>Most one-page sites are ready to preview within a week after we get your photos and information.</p></details>
+        <details><summary>Who owns the website?</summary><p>You do. Your domain is registered in your name, and if you ever leave, we hand over every file at no charge.</p></details>
+        <details><summary>What does the care plan cover?</summary><p>Hosting, security, and small updates like new prices, photos, hours and seasonal notices. Text us the change and it's on your site within two days.</p></details>
+        <details><summary>Can my site be in another language?</summary><p>Yes. We've built sites with English and Bangla, and we can add Spanish, Arabic or another language your customers speak.</p></details>
+        <details><summary>Can you take online payments or bookings?</summary><p>For most small businesses we start simple, with tap-to-call and text-message ordering. If you need payments or booking, we'll talk through options and costs first.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="band closing" style="padding-top:0" aria-labelledby="closeH">
+    <div class="wrap">
+      <div class="box">
+        <div style="display:grid;gap:16px">
+          <p class="kicker">Let's build it</p>
+          <h2 id="closeH">Ready to open your business online?</h2>
+          <p class="lede">Tell us about your business. We'll reply with an idea and a price, with no obligation.</p>
+          <a class="btn" href="#plan" style="justify-self:start">Plan my website <span class="arr">→</span></a>
+        </div>
+        <div class="contact">
+          <div><span>Call or text</span><b id="cPhone"></b></div>
+          <div><span>Email</span><b id="cEmail"></b></div>
+          <div><span>Serving</span><b>South Carolina</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> Palmetto Web Works</span>
+    <span>Websites for local businesses · South Carolina</span>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(() => {
+  // ---- Fill these in before going live ----
+  const CONTACT = { phone: "+1 (803) 386-8526", email: "asiddique@gmail.com" };
+
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const money = n => "$" + n.toLocaleString("en-US");
+  const store = {
+    get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+  };
+
+  // contact
+  const show = (el, v, label) => { if (v) el.textContent = v; else { el.innerHTML = `<span class="todo">${label}</span>`; } };
+  show($("#cPhone"), CONTACT.phone, "Your phone number");
+  show($("#cEmail"), CONTACT.email, "Your email");
+  $("#sendTo").textContent = [CONTACT.phone, CONTACT.email].filter(Boolean).join(" or ") || "us by text or email";
+
+  // header border on scroll
+  const hdr = $("#hdr");
+  addEventListener("scroll", () => hdr.classList.toggle("scrolled", scrollY > 8), { passive: true });
+
+  // hero mockup carousel
+  const slides = $$("#screen .slide"), tabs = $$("#switch button"), url = $("#mockUrl");
+  let cur = 0, timer;
+  const go = i => {
+    cur = (i + slides.length) % slides.length;
+    slides.forEach((s, k) => s.classList.toggle("on", k === cur));
+    tabs.forEach((t, k) => t.setAttribute("aria-selected", k === cur));
+    url.textContent = slides[cur].dataset.url;
+  };
+  const auto = () => { clearInterval(timer); if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => go(cur + 1), 4200); };
+  tabs.forEach(t => t.addEventListener("click", () => { go(+t.dataset.i); auto(); }));
+  $("#screen").addEventListener("mouseenter", () => clearInterval(timer));
+  $("#screen").addEventListener("mouseleave", auto);
+  auto();
+
+  // business types
+  const BIZ = [
+    { id: "farm", short: "farm", name: "Farms & food", title: "Show what's fresh and what it costs", text: "Customers want to know what you have, what it costs and when they can come. We make that clear on the first screen.", items: ["Products and prices that are easy to update", "Seasonal and Eid or holiday notices", "Order or visit requests by text", "Directions and a visit-by-appointment note", "Photos of your animals, crops or kitchen"] },
+    { id: "food", short: "restaurant", name: "Restaurants", title: "Get the menu in front of hungry people", text: "Most people check the menu and hours before they decide where to eat. Make both one tap away.", items: ["Menu with prices and photos", "Hours, address and tap-to-call", "Catering and large-order requests", "Daily specials you can change by text", "Links to your delivery apps"] },
+    { id: "salon", short: "salon", name: "Salons & barbers", title: "Fill your chairs with new customers", text: "Show your work, your prices and how to book, so new customers walk in already sure.", items: ["Services and price list", "Gallery of your best work", "Booking by text or your booking app", "Walk-in hours and wait-time notes", "Instagram and reviews links"] },
+    { id: "trades", short: "home services", name: "Home services", title: "Turn searches into estimate requests", text: "When a pipe bursts or the lawn grows wild, people pick whoever looks trustworthy first.", items: ["Services and the areas you cover", "Before-and-after photos", "A quick estimate request form", "License and insurance details", "Tap-to-call on every page"] },
+    { id: "nonprofit", short: "community", name: "Nonprofits & masjids", title: "Keep your community informed", text: "One place for schedules, events and ways to help, so you're not answering the same questions all week.", items: ["Weekly program or prayer schedule", "Upcoming events and announcements", "Donation link", "Volunteer sign-up details", "Pages in more than one language"] },
+  ];
+  const bizTabs = $("#bizTabs"), bizPanel = $("#bizPanel");
+  BIZ.forEach((b, i) => {
+    const btn = document.createElement("button");
+    btn.type = "button"; btn.role = "tab"; btn.textContent = b.name; btn.dataset.i = i;
+    btn.addEventListener("click", () => pickBiz(i));
+    bizTabs.appendChild(btn);
+  });
+  function pickBiz(i) {
+    const b = BIZ[i];
+    $$("button", bizTabs).forEach((t, k) => t.setAttribute("aria-selected", k === i));
+    bizPanel.innerHTML = `<div><h3>${b.title}</h3><p class="lede">${b.text}</p><a class="btn small" href="#plan" data-biz="${i}" style="margin-top:20px">Plan a ${b.short} site</a></div><ul class="ticks">${b.items.map(x => `<li>${x}</li>`).join("")}</ul>`;
+  }
+  pickBiz(0);
+  bizPanel.addEventListener("click", e => {
+    const a = e.target.closest("[data-biz]"); if (!a) return;
+    const map = ["farm or food business", "restaurant or catering", "salon or barbershop", "home services or trades", "nonprofit or community center"];
+    $("#pType").value = map[+a.dataset.biz]; build();
+  });
+
+  // pricing
+  const PKGS = [
+    { id: "starter", name: "Starter", price: 300, care: 30, desc: "A one-page site to get you found.", items: ["One page: about, photos, contact", "Map link and tap-to-call", "Made for phones", "Hosting setup"] },
+    { id: "business", name: "Business", price: 500, care: 30, pop: true, desc: "Our most popular. Like the farm site above.", items: ["Everything in Starter", "Products or services with prices", "Photo gallery", "A custom tool, like a price calculator or order message"] },
+    { id: "multi", name: "Multi-page", price: 800, care: 30, desc: "For businesses with more to say.", items: ["Everything in Business", "3 to 5 pages", "Menu, services or events pages", "Contact or estimate request page"] },
+  ];
+  const ADDS = [
+    { id: "domain", name: "Custom domain setup", price: 50 },
+    { id: "maps", name: "Google Maps listing", price: 50 },
+    { id: "page", name: "Extra page", price: 75 },
+    { id: "lang", name: "Second language", price: 100 },
+  ];
+  let bill = "month";
+  const careText = p => bill === "month" ? `<b>+ ${money(p.care)}</b> / month care plan` : `<b>+ ${money(p.care * 10)}</b> / year care plan`;
+  function renderPlans() {
+    $("#plans").innerHTML = PKGS.map(p => `
+      <article class="plan${p.pop ? " pop" : ""}">
+        ${p.pop ? '<span class="badge">Most popular</span>' : ""}
+        <h3>${p.name}</h3>
+        <p class="price"><b>${money(p.price)}</b><span>one time</span></p>
+        <p class="care">${careText(p)}</p>
+        <div style="display:grid;gap:12px;align-content:start"><p style="color:var(--muted)">${p.desc}</p><ul class="ticks">${p.items.map(x => `<li>${x}</li>`).join("")}</ul></div>
+        <button class="btn" type="button" data-pkg="${p.id}">Choose ${p.name}</button>
+      </article>`).join("");
+  }
+  $$(".bill button").forEach(b => b.addEventListener("click", () => {
+    bill = b.dataset.bill;
+    $$(".bill button").forEach(x => x.setAttribute("aria-pressed", x === b));
+    renderPlans();
+    $(`input[name=care][value=${bill}]`).checked = true; build();
+  }));
+  renderPlans();
+  $("#plans").addEventListener("click", e => {
+    const b = e.target.closest("[data-pkg]"); if (!b) return;
+    $(`input[name=pkg][value=${b.dataset.pkg}]`).checked = true; build();
+    $("#plan").scrollIntoView();
+  });
+
+  // planner
+  $("#pkgOpts").innerHTML = PKGS.map(p => `<label><input type="radio" name="pkg" value="${p.id}"${p.pop ? " checked" : ""}> ${p.name} · ${money(p.price)}</label>`).join("");
+  $("#addOpts").innerHTML = ADDS.map(a => `<label><input type="checkbox" name="add" value="${a.id}"> ${a.name} · ${money(a.price)}</label>`).join("");
+
+  function build() {
+    const pkg = PKGS.find(p => p.id === ($("input[name=pkg]:checked") || {}).value) || PKGS[1];
+    const adds = $$("input[name=add]:checked").map(i => ADDS.find(a => a.id === i.value));
+    const care = $("input[name=care]:checked").value;
+    const buildCost = pkg.price + adds.reduce((s, a) => s + a.price, 0);
+    const careCost = care === "month" ? pkg.care : care === "year" ? pkg.care * 10 : 0;
+    $("#tBuild").textContent = money(buildCost);
+    $("#tCareLbl").textContent = care === "year" ? "Care plan, yearly" : "Care plan";
+    $("#tCare").textContent = care === "none" ? "None" : care === "month" ? `${money(careCost)} / month` : `${money(careCost)} / year`;
+    $("#tStart").textContent = money(buildCost);
+
+    const name = $("#pName").value.trim(), biz = $("#pBiz").value.trim(), type = $("#pType").value, have = $("#pHave").value, note = $("#pNote").value.trim();
+    let m = `Hi! ${name ? "This is " + name + (biz ? " from " + biz : "") + ". " : biz ? "I'm with " + biz + ". " : ""}I'd like a website${type ? " for my " + type : ""}.`;
+    if (have === "no") m += " It would be my first website.";
+    if (have === "yes") m += " I have one now, but it needs a redo.";
+    if (have === "fb") m += " Right now I only have a Facebook page.";
+    m += `\n\nPackage: ${pkg.name} (${money(pkg.price)})`;
+    if (adds.length) m += `\nAdd-ons: ${adds.map(a => a.name).join(", ")}`;
+    m += `\nCare plan: ${care === "none" ? "none for now" : care === "month" ? money(careCost) + " a month" : money(careCost) + " a year"}`;
+    m += `\nEstimated build: ${money(buildCost)}`;
+    if (note) m += `\n\n${note}`;
+    m += "\n\nWhen can we talk?";
+    $("#pMsg").textContent = m;
+    store.set("pww-plan", { pkg: pkg.id, adds: adds.map(a => a.id), care, name, biz, type, have, note });
+  }
+  const saved = store.get("pww-plan");
+  if (saved) {
+    const r = $(`input[name=pkg][value=${saved.pkg}]`); if (r) r.checked = true;
+    (saved.adds || []).forEach(id => { const c = $(`input[name=add][value=${id}]`); if (c) c.checked = true; });
+    const c = $(`input[name=care][value=${saved.care}]`); if (c) c.checked = true;
+    $("#pName").value = saved.name || ""; $("#pBiz").value = saved.biz || ""; $("#pType").value = saved.type || ""; $("#pHave").value = saved.have || ""; $("#pNote").value = saved.note || "";
+  }
+  $("#planForm").addEventListener("input", build);
+  $("#planForm").addEventListener("change", build);
+  $("#planForm").addEventListener("submit", e => e.preventDefault());
+  build();
+
+  // copy
+  let tt;
+  const toast = msg => { const t = $("#toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(tt); tt = setTimeout(() => t.classList.remove("on"), 1800); };
+  $("#copyPlan").addEventListener("click", () => {
+    const text = $("#pMsg").textContent;
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents($("#pMsg")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); toast("Selected. Press copy to finish"); };
+    if (navigator.clipboard) navigator.clipboard.writeText(text).then(() => toast("Message copied"), fallback); else fallback();
+  });
+
+  $("#yr").textContent = new Date().getFullYear();
+})();
+</script>
+
+</body>
+</html>
