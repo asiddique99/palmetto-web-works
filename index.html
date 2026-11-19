@@ -72,6 +72,8 @@ p { margin: 0; }
 /* header */
 header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: border-color .2s; }
 header.top.scrolled { border-color: var(--line); }
+#plan { scroll-margin-top: 90px; }
+#work, #pricing, #process, #faq { scroll-margin-top: 90px; }
 header.top .wrap { display: flex; align-items: center; gap: 20px; padding-block: 14px; }
 .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font: 800 1.15rem var(--font-display); letter-spacing: -.02em; white-space: nowrap; }
 .logo svg { width: 34px; height: 34px; flex: none; }
@@ -270,6 +272,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           <a class="btn ghost" href="#work">See our work</a>
         </div>
         <p class="reassure"><span>Sites from $300</span><span>No contracts</span><span>Your site stays yours</span></p>
+        <p style="margin-top:12px;font-size:.95rem"><a href="sms:+18033868526?&amp;body=Hi%20Asim%2C%20I%27d%20like%20to%20book%20a%20quick%20call%20about%20a%20website">Prefer to talk first? Text to book a quick call →</a></p>
       </div>
 
       <div class="browser" aria-label="Examples of websites we build">
@@ -326,7 +329,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
             <div class="s-nav"><span style="gap:8px;align-items:center"><b style="display:grid;place-items:center;width:24px;height:24px;border-radius:6px;background:#E9F2ED;color:#0B1F17;font:700 .62rem 'JetBrains Mono',monospace">AS</b>Asim Siddique</span><a class="s-link" href="https://asim-siddique.vercel.app/" target="_blank" rel="noopener" style="background:#D9B26A;color:#0B1F17;font:600 .7rem 'Figtree',sans-serif;padding:5px 10px;border-radius:999px">Get in touch ↗</a></div>
             <div class="s-body">
               <span class="sample-tag">Live site</span>
-              <p style="font:400 .7rem 'JetBrains Mono',monospace;opacity:.85"><span style="color:#5BD48C">●</span> ONLINE &nbsp;uptime: 30+ yrs &nbsp;zLinux · middleware</p>
+              <p style="font:400 .7rem 'JetBrains Mono',monospace;opacity:.85"><span style="color:#5BD48C">●</span> ONLINE &nbsp;uptime: 30+ yrs &nbsp;Linux · middleware</p>
               <h4 style="font-family:'Big Shoulders Display','Arial Narrow',Impact,sans-serif;text-transform:uppercase;letter-spacing:0;line-height:.92;max-width:16ch;font-size:clamp(1.5rem,3.6vw,2.4rem)">Keeping critical systems <span style="color:#D9B26A">secure</span>, stable and compliant.</h4>
               <p>30+ years in security, compliance and enterprise infrastructure. Columbia, SC.</p>
               <a class="pill" href="https://asim-siddique.vercel.app/" target="_blank" rel="noopener" style="background:transparent;color:#D9B26A;border:1px solid #D9B26A">See selected work ↗</a>
@@ -444,7 +447,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <div class="head">
         <p class="kicker">Plan your site</p>
         <h2 id="planH">See your price and send us your idea</h2>
-        <p class="lede">Choose what you need. We'll write the message for you to send. Nothing is sent from this page.</p>
+        <p class="lede">Choose what you need, then send it to us — we'll reply with an idea and a price.</p>
       </div>
       <div class="planner">
         <form class="form" id="planForm" novalidate>
@@ -465,8 +468,12 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
             </div>
           </fieldset>
           <div class="row2">
-            <div class="field"><label for="pName">Your name</label><input id="pName" autocomplete="name" placeholder="e.g. Nabil"></div>
+            <div class="field"><label for="pName">Your name</label><input id="pName" autocomplete="name" placeholder="e.g. Nabil" required></div>
             <div class="field"><label for="pBiz">Business name</label><input id="pBiz" autocomplete="organization" placeholder="e.g. Lugoff Barbershop"></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="pEmail">Your email</label><input id="pEmail" type="email" autocomplete="email" placeholder="you@example.com" required></div>
+            <div class="field"><label for="pPhone">Your phone</label><input id="pPhone" type="tel" autocomplete="tel" placeholder="(803) 555-0123" required></div>
           </div>
           <div class="row2">
             <div class="field"><label for="pType">Kind of business</label>
@@ -477,6 +484,15 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
             </div>
           </div>
           <div class="field"><label for="pNote">Anything else</label><textarea id="pNote" rows="3" placeholder="What you sell, who your customers are, a website you like…"></textarea></div>
+          <div style="display:grid;gap:10px;margin-top:4px">
+            <button class="btn" type="submit" id="sendPlan">Send my request</button>
+            <p id="planStatus" role="status" style="margin:0;font-size:.95rem"></p>
+          </div>
+          <div id="planThanks" hidden style="margin-top:4px;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--surface)">
+            <b>Thanks — we've got it.</b>
+            <p style="margin:6px 0 10px;color:var(--muted)">We'll reply with an idea and a price, usually within a day. Prefer to talk first?</p>
+            <a class="btn ghost small" href="sms:+18033868526?&amp;body=Hi%20Asim%2C%20I%27d%20like%20to%20book%20a%20quick%20call%20about%20a%20website">Text to book a quick call</a>
+          </div>
         </form>
         <aside class="summary" aria-live="polite">
           <span class="kicker">Your estimate</span>
@@ -488,7 +504,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           </div>
           <pre id="pMsg"></pre>
           <button class="btn" type="button" id="copyPlan">Copy message</button>
-          <small>Send it to Asim Siddique at <span id="sendTo"></span></small>
+          <small>Prefer to text instead? Send it to Asim Siddique at <span id="sendTo"></span></small>
         </aside>
       </div>
     </div>
@@ -501,7 +517,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <h2 id="procH">From first chat to live site</h2>
       </div>
       <ol class="steps">
-        <li><h3>Talk</h3><p>A short call or coffee. Tell us what you sell, who your customers are and what they ask you most.</p></li>
+        <li><h3>Talk</h3><p>A short call or coffee. Tell us what you sell, who your customers are and what they ask you most. <a href="sms:+18033868526?&amp;body=Hi%20Asim%2C%20I%27d%20like%20to%20book%20a%20quick%20call%20about%20a%20website">Text to book a quick call</a> — we'll reply with a time.</p></li>
         <li><h3>Send photos</h3><p>Phone photos work. Send your prices, hours and anything customers should know.</p></li>
         <li><h3>Preview</h3><p>You see your site before it goes live. Ask for changes until it feels right.</p></li>
         <li><h3>Go live</h3><p>We publish it, connect your domain and keep it up to date on the care plan.</p></li>
@@ -534,6 +550,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           <h2 id="closeH">Ready to open your business online?</h2>
           <p class="lede">Tell us about your business. We'll reply with an idea and a price, with no obligation.</p>
           <a class="btn" href="#plan" style="justify-self:start">Plan my website <span class="arr">→</span></a>
+          <a class="btn ghost" href="sms:+18033868526?&amp;body=Hi%20Asim%2C%20I%27d%20like%20to%20book%20a%20quick%20call%20about%20a%20website" style="justify-self:start">Text to book a quick call</a>
         </div>
         <div class="contact">
           <div><span>Contact</span><b>Asim Siddique</b></div>
@@ -567,11 +584,12 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
   };
 
-  // contact
+  // contact — phone/email are links so visitors can tap to call, text or email
+  const SMS_HREF = "sms:+18033868526?&body=" + encodeURIComponent("Hi Asim, I'd like to book a quick call about a website");
   const show = (el, v, label) => { if (v) el.textContent = v; else { el.innerHTML = `<span class="todo">${label}</span>`; } };
-  show($("#cPhone"), CONTACT.phone, "Your phone number");
-  show($("#cEmail"), CONTACT.email, "Your email");
-  $("#sendTo").textContent = [CONTACT.phone, CONTACT.email].filter(Boolean).join(" or ") || "us by text or email";
+  $("#cPhone").innerHTML = `<a href="tel:+18033868526">${CONTACT.phone}</a>`;
+  $("#cEmail").innerHTML = `<a href="mailto:${CONTACT.email}">${CONTACT.email}</a>`;
+  $("#sendTo").innerHTML = `<a href="${SMS_HREF}">text ${CONTACT.phone}</a> or <a href="mailto:${CONTACT.email}">${CONTACT.email}</a>`;
 
   // header border on scroll
   const hdr = $("#hdr");
@@ -675,7 +693,10 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     $("#tStart").textContent = money(buildCost);
 
     const name = $("#pName").value.trim(), biz = $("#pBiz").value.trim(), type = $("#pType").value, have = $("#pHave").value, note = $("#pNote").value.trim();
+    const email = $("#pEmail").value.trim(), phone = $("#pPhone").value.trim();
     let m = `Hi Asim! ${name ? "This is " + name + (biz ? " from " + biz : "") + ". " : biz ? "I'm with " + biz + ". " : ""}I'd like a website${type ? " for my " + type : ""}.`;
+    if (email) m += `\nYou can reach me at ${email}${phone ? " or " + phone : ""}.`;
+    if (phone && !email) m += `\nYou can reach me at ${phone}.`;
     if (have === "no") m += " It would be my first website.";
     if (have === "yes") m += " I have one now, but it needs a redo.";
     if (have === "fb") m += " Right now I only have a Facebook page.";
@@ -686,7 +707,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     if (note) m += `\n\n${note}`;
     m += "\n\nWhen can we talk?";
     $("#pMsg").textContent = m;
-    store.set("pww-plan", { pkg: pkg.id, adds: adds.map(a => a.id), care, name, biz, type, have, note });
+    store.set("pww-plan", { pkg: pkg.id, adds: adds.map(a => a.id), care, name, biz, type, have, note, email, phone });
   }
   const saved = store.get("pww-plan");
   if (saved) {
@@ -694,10 +715,42 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     (saved.adds || []).forEach(id => { const c = $(`input[name=add][value=${id}]`); if (c) c.checked = true; });
     const c = $(`input[name=care][value=${saved.care}]`); if (c) c.checked = true;
     $("#pName").value = saved.name || ""; $("#pBiz").value = saved.biz || ""; $("#pType").value = saved.type || ""; $("#pHave").value = saved.have || ""; $("#pNote").value = saved.note || "";
+    $("#pEmail").value = saved.email || ""; $("#pPhone").value = saved.phone || "";
   }
   $("#planForm").addEventListener("input", build);
   $("#planForm").addEventListener("change", build);
-  $("#planForm").addEventListener("submit", e => e.preventDefault());
+  // Real submit: POST the lead to /api/send-lead (Vercel serverless function,
+  // api/send-lead.js). It emails Asim and sends the visitor an auto-reply.
+  // The Copy message button stays as a fallback if sending fails.
+  $("#planForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    const status = $("#planStatus"), btn = $("#sendPlan");
+    if (!e.target.reportValidity()) return;
+    const pkg = PKGS.find(p => p.id === ($("input[name=pkg]:checked") || {}).value) || PKGS[1];
+    const adds = $$("input[name=add]:checked").map(i => ADDS.find(a => a.id === i.value));
+    const care = $("input[name=care]:checked").value;
+    const payload = {
+      name: $("#pName").value.trim(), email: $("#pEmail").value.trim(), phone: $("#pPhone").value.trim(),
+      business: $("#pBiz").value.trim(), kind: $("#pType").value, have: $("#pHave").value,
+      notes: $("#pNote").value.trim(), package: pkg.id, addOns: adds.map(a => a.id), care,
+      message: $("#pMsg").textContent,
+    };
+    btn.disabled = true; btn.textContent = "Sending…";
+    status.textContent = "";
+    try {
+      const res = await fetch("/api/send-lead", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || ("Could not send (HTTP " + res.status + ")"));
+      status.textContent = "Thanks — we've got it. We'll reply with an idea and a price.";
+      $("#planThanks").hidden = false;
+      $("#planThanks").scrollIntoView({ behavior: "smooth", block: "nearest" });
+      try { localStorage.removeItem("pww-plan"); } catch {}
+      btn.textContent = "Sent ✓";
+    } catch (err) {
+      status.textContent = "That didn't send — please use the Copy message button and text or email it to us instead. (" + err.message + ")";
+      btn.disabled = false; btn.textContent = "Send my request";
+    }
+  });
   build();
 
   // copy
